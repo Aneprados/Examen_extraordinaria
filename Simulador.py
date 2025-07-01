@@ -1,5 +1,5 @@
-from .cuerpo import CuerpoCeleste
-from .vector3d import Vector3D
+from Cuerpos_celestes import CuerpoCeleste
+from Clase_vector_3D import Vector3D
 import json
 import csv
 import math
@@ -49,13 +49,17 @@ class Simulador:
                 distancia = r_vector.magnitude()
 
                 if distancia == 0:
+                    # Cuerpos en la misma posición, fuerza indefinida o muy grande
+                    # Podríamos simular una colisión o simplemente evitar la división por cero
                     continue
 
+                # Ley de gravitación universal: F = G * (m1 * m2) / r^2
+                # Para la forma vectorial: F_ij = G * (m_i * m_j) / r_ij^3 * (r_j - r_i)
                 fuerza_magnitud = (self.G * cuerpo1.masa * cuerpo2.masa) / (distancia**2)
                 fuerza_direccion = r_vector.normalize()
 
                 fuerza_ij = fuerza_direccion * fuerza_magnitud
-                fuerza_ji = fuerza_ij * -1.0
+                fuerza_ji = fuerza_ij * -1.0 # La fuerza de j sobre i es igual y opuesta
 
                 fuerzas_netas[cuerpo1.id] = fuerzas_netas[cuerpo1.id] + fuerza_ij
                 fuerzas_netas[cuerpo2.id] = fuerzas_netas[cuerpo2.id] + fuerza_ji
@@ -64,13 +68,16 @@ class Simulador:
     def paso_simulacion(self, dt: float):
         fuerzas = self.calcular_fuerzas()
 
+        # Aplicar fuerzas y actualizar velocidades
         for cuerpo_id, fuerza_neta in fuerzas.items():
             cuerpo = self.cuerpos[cuerpo_id]
             cuerpo.aplicar_fuerza(fuerza_neta, dt)
 
+        # Actualizar posiciones
         for cuerpo in self.cuerpos.values():
             cuerpo.mover(dt)
 
+        # Calcular y mostrar energías y momento
         energia_cinetica_total = sum(cuerpo.energia_cinetica() for cuerpo in self.cuerpos.values())
 
         energia_potencial_total = 0.0
@@ -91,6 +98,7 @@ class Simulador:
         print(f"Momento Lineal Total: {momento_lineal_total} kg·m/s")
         print("------------------------------------------")
 
+
     def guardar(self, archivo: str, formato: str = 'json'):
         if not self.cuerpos:
             print("No hay cuerpos para guardar.")
@@ -105,6 +113,7 @@ class Simulador:
         elif formato.lower() == 'csv':
             with open(archivo, 'w', newline='') as f:
                 writer = csv.writer(f, delimiter=';')
+                # Escribir encabezado
                 writer.writerow(['id', 'masa', 'pos_x', 'pos_y', 'pos_z', 'vel_x', 'vel_y', 'vel_z'])
                 for cuerpo_data in data_to_save:
                     row = [
@@ -123,7 +132,7 @@ class Simulador:
             print(f"Formato de archivo '{formato}' no soportado. Use 'json' o 'csv'.")
 
     def cargar(self, archivo: str, formato: str = 'json'):
-        self.cuerpos.clear()
+        self.cuerpos.clear() # Vaciar colección antes de cargar
 
         loaded_data = []
         try:
@@ -133,8 +142,9 @@ class Simulador:
             elif formato.lower() == 'csv':
                 with open(archivo, 'r', newline='') as f:
                     reader = csv.reader(f, delimiter=';')
-                    header = next(reader)
+                    header = next(reader) # Saltar encabezado
                     for row in reader:
+                        # Asegurarse de que hay suficientes columnas
                         if len(row) != 8:
                             print(f"Advertencia: Fila CSV mal formada, saltando: {row}")
                             continue
