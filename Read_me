@@ -1,0 +1,45 @@
+# Simulador de Sistemas Planetarios
+
+Este proyecto es un simulador de sistemas planetarios que permite modelar y simular la interacción gravitacional entre cuerpos celestes en un espacio tridimensional. El programa incluye funcionalidades para agregar cuerpos celestes, calcular fuerzas gravitacionales, realizar pasos de simulación y guardar/cargar datos en diferentes formatos.
+
+## Estructura del Proyecto
+
+- **`Clase_vector_3D.py`**: Implementa la clase `Vector3D` para representar vectores tridimensionales y realizar operaciones como suma, resta, multiplicación por un escalar, normalización y cálculo de magnitud.
+- **`Cuerpos_celestes.py`**: Define la clase `CuerpoCeleste`, que representa un cuerpo celeste con propiedades como masa, posición, velocidad y métodos para calcular energía cinética, energía potencial y aplicar fuerzas.
+- **`Simulador.py`**: Contiene la clase `Simulador`, que gestiona la simulación de cuerpos celestes, calcula fuerzas gravitacionales, realiza pasos de simulación y permite guardar/cargar datos en formatos JSON y CSV.
+- **`Lanzador.py`**: Implementa una interfaz de línea de comandos para interactuar con el simulador. Permite listar cuerpos, agregar nuevos, ejecutar pasos de simulación y manejar archivos de persistencia.
+- **`main.py`**: Punto de entrada del programa. Inicializa el simulador y lanza el menú interactivo.
+- **`Pruebas_unitarias.py`**: Contiene pruebas unitarias para la clase `Vector3D`.
+- **`Pruebas_cuerpo.py`**: Contiene pruebas unitarias para la clase `CuerpoCeleste`.
+- **`Pruebas_del_simulador.py`**: Contiene pruebas unitarias para la clase `Simulador`, incluyendo cálculos de fuerzas, pasos de simulación y persistencia de datos.
+- **`nose.py`**: Archivo adicional que contiene una implementación alternativa de la clase `Vector3D`.
+
+## Funcionalidades Principales
+
+1. **Simulación de Cuerpos Celestes**:
+   - Agregar cuerpos celestes con masa, posición y velocidad inicial.
+   - Calcular fuerzas gravitacionales entre los cuerpos.
+   - Realizar pasos de simulación para actualizar posiciones y velocidades.
+
+2. **Persistencia de Datos**:
+   - Guardar el estado de la simulación en archivos JSON o CSV.
+   - Cargar simulaciones desde archivos JSON o CSV.
+
+3. **Interfaz de Usuario**:
+   - Menú interactivo para listar cuerpos, agregar nuevos, ejecutar simulaciones y manejar archivos.
+
+4. **Pruebas Unitarias**:
+   - Pruebas para validar la funcionalidad de las clases `Vector3D`, `CuerpoCeleste` y `Simulador`.
+
+## Requisitos
+
+- Python 3.10 o superior.
+- Librerías externas:
+  - `pytest` (para ejecutar las pruebas unitarias).
+
+## Cómo Ejecutar el Programa
+
+1. Asegúrate de tener Python instalado en tu sistema.
+2. Ejecuta el archivo `main.py`:
+   ```bash
+   python main.py
