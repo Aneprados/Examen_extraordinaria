@@ -1,10 +1,4 @@
-from Lanzador import Lanzador
-
-def main():
-    # Aquí puedes agregar la lógica principal de tu programa
-    print("Ejecutando el programa...")
-    lanzador = Lanzador()
-    # Llama a métodos o realiza acciones con el objeto lanzador
+from Lanzador import Lanzador  
 
 if __name__ == "__main__":
-    main()
+    lanzador = Lanzador()
