@@ -43,3 +43,6 @@ Este proyecto es un simulador de sistemas planetarios que permite modelar y simu
 2. Ejecuta el archivo `main.py`:
    ```bash
    python main.py
+![diagram (5)](https://github.com/user-attachments/assets/5666a1c1-31fb-4b25-bdf1-20179a095814)
+
+   
